@@ -122,4 +122,4 @@ Pull requests are welcome. For major changes, open an issue first to discuss wha
 ---
 
 ## 📜 License  
-MIT License © 2025  Prompt Review Engine
+MIT License © 2025  Nagarjun P L
