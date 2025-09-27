@@ -1,125 +1,120 @@
-# 🚀 Prompt Review Engine  
+# Prompt Review Engine
 
-A web app that validates prompts using the **COSTAR framework** (Context, Objective, Style, Tone, Audience, Response). It reviews user input, applies rule-based checks, and returns a verdict — **ALLOW / NEEDS FIX / BLOCK** — along with suggestions for improving clarity and safety.  
+A comprehensive AI-powered prompt analysis tool with COSTAR methodology integration.
 
----
+## Features
 
-## ✨ Features  
-- 📝 **Prompt Analysis** – Breaks down input into COSTAR elements  
-- ✅ **Verdict System** – ALLOW / NEEDS FIX / BLOCK  
-- 🔧 **Suggestions** – Auto-recommend missing COSTAR fields  
-- 💾 **Database Support** – Stores prompts, verdicts, and corrections (SQL backend)  
-- 🔌 **LLM Broker** – Forward only ALLOW prompts to an LLM (ChatGPT, DeepSeek, etc.)  
-- 🎨 **Frontend UI** – Responsive design with animations  
-- 📊 **Graph Insights** – Track statistics of prompt verdicts  
+- **Prompt Analysis**: Advanced COSTAR (Context, Objective, Style, Tone, Audience, Response) analysis
+- **Security Filtering**: Multi-layer security checks to block harmful content
+- **LLM Integration**: Support for ChatGPT, DeepSeek, and Claude APIs
+- **Interactive Graph**: Visual representation of prompt analysis flow
+- **User Authentication**: Firebase-based authentication with Google sign-in
+- **History Tracking**: Complete audit trail of all analyzed prompts
+- **Real-time Statistics**: Dashboard with analysis metrics
 
----
+## Setup Instructions
 
-## 🛠️ Tech Stack  
-- **Frontend**: HTML, CSS, JavaScript  
-- **Backend**: Flask (Python)  
-- **Database**: SQLite / MySQL  
-- **Visualization**: Chart.js (for verdict statistics)  
+### 1. Firebase Configuration
 
----
+To enable authentication, you need to set up Firebase:
 
-## 📂 Project Structure  
-```
-prompt-review-engine/
-│── frontend/
-│   ├── index.html
-│   ├── style.css
-│   └── script.js
-│
-│── backend/
-│   ├── app.py         # Flask server
-│   ├── rules.py       # Rule engine for COSTAR
-│   ├── models.py      # SQL database models
-│   └── database.db    # SQLite database (or MySQL config)
-│
-│── README.md
-│── requirements.txt
+1. Go to [Firebase Console](https://console.firebase.google.com/)
+2. Create a new project or use an existing one
+3. Enable Authentication and add Email/Password and Google providers
+4. Get your Firebase configuration from Project Settings
+5. Update `firebase-config.js` with your actual Firebase config:
+
+```javascript
+const firebaseConfig = {
+  apiKey: "your-api-key",
+  authDomain: "your-project.firebaseapp.com",
+  projectId: "your-project-id",
+  storageBucket: "your-project.appspot.com",
+  messagingSenderId: "your-sender-id",
+  appId: "your-app-id",
+  measurementId: "your-measurement-id"
+};
 ```
 
----
+### 2. LLM API Keys
 
-## ⚡ Installation  
+Create a `.env` file in the root directory with your API keys:
 
-1. **Clone the repo**  
-   ```bash
-   git clone https://github.com/your-username/prompt-review-engine.git
-   cd prompt-review-engine
-   ```
+```env
+OPENAI_API_KEY=your_openai_api_key
+DEEPSEEK_API_KEY=your_deepseek_api_key
+ANTHROPIC_API_KEY=your_anthropic_api_key
+```
 
-2. **Create & activate virtual environment**  
-   ```bash
-   python -m venv venv
-   source venv/bin/activate   # Mac/Linux
-   venv\Scripts\activate      # Windows
-   ```
+### 3. Installation
 
-3. **Install dependencies**  
-   ```bash
-   pip install -r requirements.txt
-   ```
+1. Install Python dependencies:
+```bash
+pip install -r requirements.txt
+```
 
-4. **Run Flask backend**  
-   ```bash
-   python backend/app.py
-   ```
+2. Run the Flask backend:
+```bash
+python app.py
+```
 
-5. **Open frontend**  
-   Open `frontend/index.html` in your browser.  
+3. Open `index.html` in your browser or serve it with a local server.
 
----
+## Usage
 
-## 🎮 Usage  
-1. Enter your prompt in the text area.  
-2. The system checks for **COSTAR elements**.  
-3. Verdict appears:  
-   - ✅ ALLOW – Forwarded to LLM (ChatGPT, DeepSeek, etc.)  
-   - ⚠️ NEEDS FIX – Suggestions are shown  
-   - ⛔ BLOCK – Prompt is rejected for safety reasons  
-4. Check live statistics in the bottom graph.  
+1. **Sign Up/Login**: Create an account or sign in with Google
+2. **Submit Prompt**: Enter your prompt in the text area
+3. **Review Analysis**: View the COSTAR analysis and security verdict
+4. **Send to LLM**: If approved, send the sanitized prompt to your chosen LLM
+5. **View History**: Access your prompt history and statistics
 
----
+## Security Features
 
-## 📊 Example  
+- Input validation and sanitization
+- Content filtering for harmful requests
+- Rate limiting and error handling
+- Secure API key management
+- User authentication and authorization
 
-**Input Prompt:**  
-> "Write a professional email to my boss."  
+## API Endpoints
 
-**Output Verdict:**  
-- Context ❌ Missing  
-- Objective ✅ Present  
-- Style ✅ Present  
-- Tone ✅ Present  
-- Audience ✅ Present  
-- Response ❌ Missing  
+- `POST /review` - Analyze a prompt
+- `POST /broker` - Send approved prompt to LLM
+- `GET /stats` - Get analysis statistics
+- `GET /history` - Get prompt history
+- `DELETE /history` - Clear history
 
-**Suggested Fix:**  
-> "Context: I need to inform my boss about a project delay.  
-> Objective: Write an email.  
-> Style: Professional.  
-> Tone: Respectful.  
-> Audience: My boss.  
-> Response: A well-structured draft email."  
+## Troubleshooting
 
----
+### Google Authentication Issues
 
-## 🚧 Roadmap  
-- [ ] Add NLP for smarter COSTAR detection  
-- [ ] User authentication system  
-- [ ] Export prompts + corrections as CSV/JSON  
-- [ ] Multi-LLM integration (ChatGPT, DeepSeek, Gemini)  
-- [ ] Deploy on Docker + cloud hosting  
+1. Ensure your domain is added to Firebase authorized domains
+2. Check that Google provider is enabled in Firebase Authentication
+3. Verify your Firebase configuration is correct
+4. Make sure popups are not blocked in your browser
 
----
+### Scrolling Issues
 
-## 🤝 Contributing  
-Pull requests are welcome. For major changes, open an issue first to discuss what you’d like to change.  
+The login and signup pages now support proper scrolling on mobile devices. If you experience issues:
 
----
+1. Clear your browser cache
+2. Ensure JavaScript is enabled
+3. Try a different browser
 
-## 📜 License  
-MIT License © 2025  Nagarjun P L
+### API Connection Issues
+
+1. Verify your API keys are correct in the `.env` file
+2. Check your internet connection
+3. Ensure the Flask server is running on port 5000
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+## License
+
+This project is licensed under the MIT License.
