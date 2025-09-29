@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Review Engine</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="auth-links">
+                <div id="userInfo" class="user-info" style="display: none;">
+                    <img id="userAvatar" class="user-avatar" src="" alt="User">
+                    <span id="userName" class="user-name"></span>
+                    <button id="logoutBtn" class="logout-btn">Logout</button>
+                </div>
+                <div id="authButtons" class="auth-buttons">
+                    <a href="login.html" class="auth-link">Sign In</a>
+                    <a href="signup.html" class="auth-link signup">Sign Up</a>
+                </div>
+            </div>
+            <div class="header-content">
+                <h1 class="title">
+                    <span class="title-icon">⚡</span>
+                    Prompt Review Engine
+                </h1>
+                <p class="subtitle">AI-powered prompt analysis with COSTAR methodology</p>
+            </div>
+        </header>
+
+        <!-- Input Section -->
+        <section class="input-section">
+            <div class="input-card">
+                <div class="input-header">
+                    <h3>Submit Your Prompt</h3>
+                    <div class="input-status" id="inputStatus">Ready</div>
+                </div>
+                <div class="input-form">
+                    <textarea 
+                        id="promptInput" 
+                        placeholder="Please sign in to analyze prompts..."
+                        rows="4"
+                        disabled
+                    ></textarea>
+                    <div class="input-actions">
+                        <button id="reviewBtn" class="btn btn-primary" disabled>
+                            <span class="btn-text">Analyze Prompt</span>
+                            <span class="btn-loader"></span>
+                        </button>
+                        <div class="llm-selection">
+                            <select id="llmSelect" disabled>
+                                <option value="ChatGPT">ChatGPT</option>
+                                <option value="DeepSeek">DeepSeek</option>
+                                <option value="Claude">Claude</option>
+                            </select>
+                            <button id="sendLLMBtn" class="btn btn-secondary" disabled>
+                                Send to LLM
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Graph Visualization -->
+        <section class="graph-section">
+            <div class="graph-header">
+                <h3>Prompt Analysis Graph</h3>
+                <div class="graph-controls">
+                    <button id="resetGraphBtn" class="btn btn-ghost">Reset View</button>
+                    <button id="clearGraphBtn" class="btn btn-ghost">Clear All</button>
+                    <button id="exportBtn" class="btn btn-ghost">Export Data</button>
+                    <button id="historyBtn" class="btn btn-ghost">View History</button>
+                </div>
+            </div>
+            <div id="graphContainer" class="graph-container">
+                <div class="graph-placeholder">
+                    <div class="placeholder-icon">🔍</div>
+                    <p>Submit a prompt to see the analysis graph</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Statistics Dashboard -->
+        <section class="stats-section">
+            <div class="stats-header">
+                <h3>Analysis Statistics</h3>
+                <button id="refreshStatsBtn" class="btn btn-ghost">Refresh</button>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon allow">✓</div>
+                    <div class="stat-content">
+                        <div class="stat-number" id="allowCount">0</div>
+                        <div class="stat-label">Allowed</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon needs-fix">⚠</div>
+                    <div class="stat-content">
+                        <div class="stat-number" id="needsFixCount">0</div>
+                        <div class="stat-label">Needs Fix</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon block">✕</div>
+                    <div class="stat-content">
+                        <div class="stat-number" id="blockCount">0</div>
+                        <div class="stat-label">Blocked</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon total">📊</div>
+                    <div class="stat-content">
+                        <div class="stat-number" id="totalCount">0</div>
+                        <div class="stat-label">Total</div>
+                    </div>
+                </div>
+            </div>
+            <div class="stats-chart">
+                <canvas id="statsChart" width="400" height="200"></canvas>
+            </div>
+        </section>
+    </div>
+
+    <!-- History Modal -->
+    <div id="historyModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Prompt History</h2>
+                <button id="closeHistoryBtn" class="btn btn-ghost">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="history-controls">
+                    <input type="text" id="historySearch" placeholder="Search prompts..." class="search-input">
+                    <select id="historyFilter" class="filter-select">
+                        <option value="all">All Verdicts</option>
+                        <option value="ALLOW">Allow</option>
+                        <option value="NEEDS_FIX">Needs Fix</option>
+                        <option value="BLOCK">Block</option>
+                    </select>
+                    <button id="clearHistoryBtn" class="btn btn-secondary">Clear History</button>
+                </div>
+                <div id="historyList" class="history-list">
+                    <div class="history-placeholder">
+                        <div class="placeholder-icon">📝</div>
+                        <p>No prompts in history yet</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tooltip -->
+    <div id="tooltip" class="tooltip"></div>
+
+    <script src="graph.js"></script>
+    <script src="animations.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
