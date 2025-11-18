@@ -1,17 +1,17 @@
-// Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyBcuU2YKUhsTvpXLP_62XC97DT7rlVV_0I",
-  authDomain: "prompt-review-fed62.firebaseapp.com",
-  projectId: "prompt-review-fed62",
-  storageBucket: "prompt-review-fed62.firebasestorage.app",
-  messagingSenderId: "251217416897",
-  appId: "1:251217416897:web:9eb13314b43092c8cdba40",
-  measurementId: "G-4F83F1BV1L"
-};
-
 // Import Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+// Firebase configuration
+const firebaseConfig = {
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTHDOMAIN,
+  projectId: process.env.FIREBASE_PROJECTID,
+  storageBucket: process.env.FIREBASE_STORAGEBUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGINGDSENDERID,
+  appId: process.env.FIREBASE_APPID,
+  measurementId: process.env.FIREBASE_MEASUREMENTID
+};
 
 // Initialize Firebase
 let app;
