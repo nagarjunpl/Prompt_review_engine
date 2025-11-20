@@ -650,8 +650,12 @@
     </div>
 
     <script type="module">
-        import { auth, googleProvider } from './firebase-config.js';
-        import { createUserWithEmailAndPassword, signInWithPopup, updateProfile } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.0/+esm';
+
+        const SUPABASE_URL = 'https://0ec90b57d6e95fcbda19832f.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJib2x0IiwicmVmIjoiMGVjOTBiNTdkNmU5NWZjYmRhMTk4MzJmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg4ODE1NzQsImV4cCI6MTc1ODg4MTU3NH0.9I8-U0x86Ak8t2DGaIk0HfvTSLsAyzdnz-Nw00mMkKw';
+
+        const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         const signupForm = document.getElementById('signupForm');
         const googleSignUpBtn = document.getElementById('googleSignUp');
@@ -672,21 +676,14 @@
         }
 
         // Check if user is already logged in
-        window.addEventListener('load', () => {
-            const userData = localStorage.getItem('user');
-            if (userData) {
-                try {
-                    const user = JSON.parse(userData);
-                    if (user.uid) {
-                        showMessage('success', 'Already logged in, redirecting...');
-                        setTimeout(() => {
-                            window.location.href = 'index.html';
-                        }, 1500);
-                        return;
-                    }
-                } catch (error) {
-                    localStorage.removeItem('user');
-                }
+        window.addEventListener('load', async () => {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session) {
+                showMessage('success', 'Already logged in, redirecting...');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1500);
+                return;
             }
         });
 
@@ -777,50 +774,30 @@
             signupButton.disabled = true;
 
             try {
-                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                const user = userCredential.user;
-                
-                // Update user profile with display name
-                await updateProfile(user, {
-                    displayName: fullname
+                const { data, error: signupError } = await supabase.auth.signUp({
+                    email: email,
+                    password: password,
+                    options: {
+                        data: {
+                            full_name: fullname
+                        }
+                    }
                 });
-                
+
+                if (signupError) {
+                    throw signupError;
+                }
+
                 showMessage('success', 'Account created successfully!');
-                
-                // Store user info in localStorage
-                localStorage.setItem('user', JSON.stringify({
-                    uid: user.uid,
-                    email: user.email,
-                    displayName: fullname
-                }));
-                
+
                 // Redirect to main app after delay
                 setTimeout(() => {
                     window.location.href = 'index.html';
                 }, 1500);
-                
+
             } catch (error) {
                 console.error('Registration error:', error);
-                let errorMsg = 'Registration failed. Please try again.';
-                
-                switch (error.code) {
-                    case 'auth/email-already-in-use':
-                        errorMsg = 'An account with this email already exists.';
-                        break;
-                    case 'auth/invalid-email':
-                        errorMsg = 'Invalid email address.';
-                        break;
-                    case 'auth/weak-password':
-                        errorMsg = 'Password is too weak. Please choose a stronger password.';
-                        break;
-                    case 'auth/operation-not-allowed':
-                        errorMsg = 'Email/password accounts are not enabled.';
-                        break;
-                    case 'auth/network-request-failed':
-                        errorMsg = 'Network error. Please check your connection and try again.';
-                        break;
-                }
-                
+                let errorMsg = error.message || 'Registration failed. Please try again.';
                 showMessage('error', errorMsg);
             } finally {
                 signupButton.classList.remove('loading');
@@ -830,84 +807,28 @@
 
         // Google Sign-Up
         googleSignUpBtn.addEventListener('click', async function() {
-           console.log('Google sign-up button clicked');
             this.disabled = true;
             const originalHTML = this.innerHTML;
             this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating account...';
 
             try {
-                console.log('Starting Google sign-up process');
-                
-                // Check if auth is properly initialized
-                if (!auth) {
-                    throw new Error('Firebase Auth not initialized');
+                const { data, error } = await supabase.auth.signInWithOAuth({
+                    provider: 'google'
+                });
+
+                if (error) {
+                    throw error;
                 }
-                
-                if (!googleProvider) {
-                    throw new Error('Google Provider not initialized');
-                }
-                
-                const result = await signInWithPopup(auth, googleProvider);
-                console.log('Google sign-up successful:', result);
-                const user = result.user;
-                
+
                 showMessage('success', 'Google account created successfully!');
-                
-                // Store user info in localStorage
-                localStorage.setItem('user', JSON.stringify({
-                    uid: user.uid,
-                    email: user.email,
-                    displayName: user.displayName,
-                    photoURL: user.photoURL
-                }));
-                
-                // Redirect to main app after delay
+
                 setTimeout(() => {
                     window.location.href = 'index.html';
                 }, 1500);
-                
+
             } catch (error) {
                 console.error('Google sign-up error:', error);
-                console.error('Error code:', error.code);
-                console.error('Error message:', error.message);
-                
-                let errorMsg = 'Google sign-up failed. Please try again.';
-                
-                switch (error.code) {
-                    case 'auth/popup-closed-by-user':
-                        errorMsg = 'Sign-up cancelled.';
-                        break;
-                    case 'auth/popup-blocked':
-                        errorMsg = 'Popup blocked. Please allow popups and try again.';
-                        break;
-                    case 'auth/account-exists-with-different-credential':
-                        errorMsg = 'An account already exists with this email using a different sign-in method.';
-                        break;
-                    case 'auth/cancelled-popup-request':
-                        errorMsg = 'Only one popup request is allowed at a time.';
-                        break;
-                    case 'auth/operation-not-allowed':
-                        errorMsg = 'Google sign-in is not enabled for this project.';
-                        break;
-                    case 'auth/unauthorized-domain':
-                        errorMsg = 'This domain is not authorized for Google sign-in.';
-                        break;
-                    case 'auth/network-request-failed':
-                        errorMsg = 'Network error. Please check your connection.';
-                        break;
-                    case 'auth/internal-error':
-                        errorMsg = 'Internal error. Please try again later.';
-                        break;
-                    case 'auth/configuration-not-found':
-                        errorMsg = 'Firebase configuration error. Please contact support.';
-                        break;
-                    case 'auth/invalid-api-key':
-                        errorMsg = 'Invalid API key. Please contact support.';
-                        break;
-                    default:
-                        errorMsg = `Authentication error (${error.code}): ${error.message}`;
-                }
-                
+                let errorMsg = error.message || 'Google sign-up failed. Please try again.';
                 showMessage('error', errorMsg);
             } finally {
                 this.disabled = false;
