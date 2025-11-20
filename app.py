@@ -1,7 +1,7 @@
 import json
 import time
 from datetime import datetime
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify, send_from_directory, render_template
 import re
 import html
 import requests
@@ -189,6 +189,16 @@ def index():
         return send_from_directory('.', 'index.html')
     except:
         return jsonify({'message': 'Welcome to Prompt Review API. Use /review endpoint to analyze prompts.'})
+
+
+@app.route("/login")
+def login():
+    return render_template("login.html")
+
+@app.route("/signup")
+def signup():
+    return render_template("signup.html")
+
 
 # Static file serving - FIXED SECURITY ISSUE
 @app.route('/<path:filename>')
