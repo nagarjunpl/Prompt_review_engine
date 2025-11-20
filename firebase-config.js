@@ -6,7 +6,7 @@ import { getAuth, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/
 // IMPORTANT: Replace these with your actual Firebase project credentials
 // Get them from: Firebase Console > Project Settings > General > Your apps
 const firebaseConfig = {
-  apiKey: "YAIzaSyBcuU2YKUhsTvpXLP_62XC97DT7rlVV_0I",
+  apiKey: "AIzaSyBcuU2YKUhsTvpXLP_62XC97DT7rlVV_0I",
   authDomain: "prompt-review-fed62.firebaseapp.com",
   projectId: "prompt-review-fed62",
   storageBucket: "prompt-review-fed62.firebasestorage.app",
