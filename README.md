@@ -1,4 +1,4 @@
-# Prompt Review Engine
+qq# Prompt Review Engine
 
 A comprehensive AI-powered prompt analysis tool with COSTAR methodology integration.
 
@@ -114,7 +114,3 @@ The login and signup pages now support proper scrolling on mobile devices. If yo
 3. Make your changes
 4. Test thoroughly
 5. Submit a pull request
-
-## License
-
-This project is licensed under the MIT License.
