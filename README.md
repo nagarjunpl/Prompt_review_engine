@@ -1,4 +1,4 @@
-qq# Prompt Review Engine
+# Prompt Review Engine
 
 A comprehensive AI-powered prompt analysis tool with COSTAR methodology integration.
 
@@ -107,10 +107,3 @@ The login and signup pages now support proper scrolling on mobile devices. If yo
 2. Check your internet connection
 3. Ensure the Flask server is running on port 5000
 
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
