@@ -84,26 +84,5 @@ python app.py
 - `GET /history` - Get prompt history
 - `DELETE /history` - Clear history
 
-## Troubleshooting
 
-### Google Authentication Issues
-
-1. Ensure your domain is added to Firebase authorized domains
-2. Check that Google provider is enabled in Firebase Authentication
-3. Verify your Firebase configuration is correct
-4. Make sure popups are not blocked in your browser
-
-### Scrolling Issues
-
-The login and signup pages now support proper scrolling on mobile devices. If you experience issues:
-
-1. Clear your browser cache
-2. Ensure JavaScript is enabled
-3. Try a different browser
-
-### API Connection Issues
-
-1. Verify your API keys are correct in the `.env` file
-2. Check your internet connection
-3. Ensure the Flask server is running on port 5000
 
