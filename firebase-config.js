@@ -6,13 +6,13 @@ import { getAuth, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/
 // IMPORTANT: Replace these with your actual Firebase project credentials
 // Get them from: Firebase Console > Project Settings > General > Your apps
 const firebaseConfig = {
-  apiKey: "AIzaSyBcuU2YKUhsTvpXLP_62XC97DT7rlVV_0I",
-  authDomain: "prompt-review-fed62.firebaseapp.com",
-  projectId: "prompt-review-fed62",
-  storageBucket: "prompt-review-fed62.firebasestorage.app",
-  messagingSenderId: "251217416897",
-  appId: "1:251217416897:web:9eb13314b43092c8cdba40",
-  measurementId: "G-4F83F1BV1L"
+  apiKey: FIREBASE_APIKEY,
+  authDomain: FIREBASE_AUTHDOMAIN,
+  projectId: FIREBASE_PROJECTID,
+  storageBucket: FIREBASE_STORAGEBUCKET,
+  messagingSenderId: FIREBASE_MESSAGINGSENDERID,
+  appId: FIREBASE_APIID,
+  measurementId: FIREBASE_MEASUREMENTID
 };
 
 // Initialize Firebase
@@ -47,3 +47,4 @@ googleProvider.setCustomParameters({
 });
 
 export default app;
+
