@@ -67,14 +67,6 @@ python app.py
 4. **Send to LLM**: If approved, send the sanitized prompt to your chosen LLM
 5. **View History**: Access your prompt history and statistics
 
-## Security Features
-
-- Input validation and sanitization
-- Content filtering for harmful requests
-- Rate limiting and error handling
-- Secure API key management
-- User authentication and authorization
-
 ## API Endpoints
 
 - `POST /review` - Analyze a prompt
