@@ -9,7 +9,6 @@ A comprehensive AI-powered prompt analysis tool with COSTAR methodology integrat
 - **LLM Integration**: Support for ChatGPT, DeepSeek, Gemini and other LLM's
 - **Real-time Statistics**: Dashboard with analysis metrics
 - **User Authentication**: Firebase-based authentication with Google sign-in
-- **History Tracking**: Complete audit trail of all analyzed prompts
 
 ## Setup Instructions
 
