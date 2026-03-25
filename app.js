@@ -28,7 +28,7 @@ class PromptReviewApp {
         const reviewBtn = document.getElementById('reviewBtn');
         reviewBtn.addEventListener('click', () => this.handlePromptReview());
 
-        // Send to LLM button
+        // Send to LLM for further process
         const sendLLMBtn = document.getElementById('sendLLMBtn');
         sendLLMBtn.addEventListener('click', () => this.handleSendToLLM());
 
