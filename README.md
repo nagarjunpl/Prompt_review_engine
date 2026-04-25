@@ -7,7 +7,7 @@ A comprehensive AI-powered prompt analysis tool with COSTAR methodology integrat
 - **Prompt Analysis**: Advanced COSTAR (Context, Objective, Style, Tone, Audience, Response) analysis
 - **Security Filtering**: Multi-layer security checks to block harmful content
 - **LLM Integration**: Support for ChatGPT, DeepSeek, Gemini and other LLM's
-- **Real-time Statistics**: Dashboard with analysis metrics
+- **Real-time Statistics**: Dashboard with analysis graph 
 - **User Authentication**: Firebase-based authentication with Google sign-in
 
 ## Setup Instructions
